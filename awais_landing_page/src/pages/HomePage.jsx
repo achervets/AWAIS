@@ -18,15 +18,15 @@ export default function HomePage() {
                 <section className="services">
                 <h1>Services</h1>
                 <ul>
-                    <li>Full-Cycle B1/B2 Visa Services</li>
-                    <li>Full-Cycle F-1 Visa Services</li>
-                    <li>Full-Cycle B1/B2 Visa Status Extension Services</li>
-                    <li>Full-Cycle Change of Status Services</li>
-                    <li>Full-Cycle TPS Services</li>
-                    <li>Full-Cycle I-765 Initial Application and Renewal Service</li>
-                    <li>Full-Cycle I-131 Application Services</li>
-                    <li>DV Lottery Registration for Individuals (In the U.S. and Abroad) Service</li>
-                    <li>Green Card through DV Lottery Winning (For Applicants in the U.S. and Abroad) Service</li>
+                    <li><Link to="/services/b1-b2-visa">Full-Cycle B1/B2 Visa Services</Link></li>
+                    <li><Link to="/services/f1-visa">Full-Cycle F-1 Visa Services</Link></li>
+                    <li><Link to="/services/b1-b2-visa-ext">Full-Cycle B1/B2 Visa Status Extension Services</Link></li>
+                    <li><Link to="/services/change-of-status">Full-Cycle Change of Status Services</Link></li>
+                    <li><Link to="/services/tps">Full-Cycle TPS Services</Link></li>
+                    <li><Link to="/services/i765-application">Full-Cycle I-765 Initial Application and Renewal Service</Link></li>
+                    <li><Link to="/services/i131-application">Full-Cycle I-131 Application Services</Link></li>
+                    <li><Link to="/services/dv-lottery">DV Lottery Registration for Individuals (In the U.S. and Abroad) Service</Link></li>
+                    <li><Link to="/services/green-card-dv">Green Card through DV Lottery Winning (For Applicants in the U.S. and Abroad) Service</Link></li>
                 </ul>
                 </section>
                 <section className="picture">Picture Goes Here</section>
