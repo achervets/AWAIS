@@ -1,7 +1,7 @@
-import './App.css'
-import { Routes, Route, Link } from 'react-router-dom'
-import HomePage from './pages/HomePage'
-import ServicePage from './pages/ServicePage'
+import './App.css';
+import { Routes, Route, Link } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ServicePage from './pages/ServicePage';
 
 export default function App() {
   return (

@@ -1,6 +1,23 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { FaInstagramSquare, FaTelegramPlane, FaWhatsappSquare } from 'react-icons/fa';
 
 export default function HomePage() {
+
+    /* This assembles the phone number for the WhatsApp link onClick, to avoid bots */
+    const part1 = "170776"
+    const part2 = "19120"
+
+    const messageText = "Test Message DNR";
+
+    const handleWhatsAppClick = (event) => {
+        event.preventDefault();
+
+        const fullNumber = part1 + part2;
+        const whatsappURL = `https://wa.me/${fullNumber}?text=${encodeURIComponent(messageText)}`;
+        
+        window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+    }
+
     return (
         <>
             <header className="header">
@@ -30,7 +47,35 @@ export default function HomePage() {
                 </ul>
                 </section>
                 <section className="picture">Picture Goes Here</section>
-                <section className="social_media">Social Media Goes Here</section>
+                <section className="social_media">
+                    <a href="https://www.instagram.com/america_with_anastasiia/" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
+                        <FaInstagramSquare size={24} />
+                        <span>
+                            Follow Us on Instagram
+                        </span>
+                    </a>
+                    <span> or </span>
+                    <a href="https://ig.me/m/america_with_anastasiia/" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
+                        <FaInstagramSquare size={24} />
+                        <span>
+                            Message Us!
+                        </span>
+                    </a>
+                    <br />
+                    <a href="https://t.me/americanastasia" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
+                        <FaTelegramPlane size={24} />
+                        <span>
+                            Message Us on Telegram!
+                        </span>
+                    </a>
+                    <br />
+                    <a href="#" onClick={handleWhatsAppClick}>
+                        <FaWhatsappSquare size={24} />
+                        <span>
+                            Message Us on WhatsApp!
+                        </span>
+                    </a>
+                </section>
             </main>
 
             <footer className="footer">
