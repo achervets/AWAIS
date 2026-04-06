@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { FaInstagramSquare, FaTelegramPlane, FaWhatsappSquare } from 'react-icons/fa';
+import { FaTelegramPlane, FaWhatsappSquare } from 'react-icons/fa';
+import { BsInstagram } from 'react-icons/bs';
 
 export default function HomePage() {
 
@@ -35,42 +36,76 @@ export default function HomePage() {
                 <section className="services">
                 <h1>Services</h1>
                 <ul>
-                    <li><Link to="/services/b1-b2-visa">Full-Cycle B1/B2 Visa Services</Link></li>
-                    <li><Link to="/services/f1-visa">Full-Cycle F-1 Visa Services</Link></li>
-                    <li><Link to="/services/b1-b2-visa-ext">Full-Cycle B1/B2 Visa Status Extension Services</Link></li>
-                    <li><Link to="/services/change-of-status">Full-Cycle Change of Status Services</Link></li>
-                    <li><Link to="/services/tps">Full-Cycle TPS Services</Link></li>
-                    <li><Link to="/services/i765-application">Full-Cycle I-765 Initial Application and Renewal Service</Link></li>
-                    <li><Link to="/services/i131-application">Full-Cycle I-131 Application Services</Link></li>
-                    <li><Link to="/services/dv-lottery">DV Lottery Registration for Individuals (In the U.S. and Abroad) Service</Link></li>
-                    <li><Link to="/services/green-card-dv">Green Card through DV Lottery Winning (For Applicants in the U.S. and Abroad) Service</Link></li>
+                    <li><Link to="/services/b1-b2-visa">B-1/B-2 Tourist Visa</Link></li>
+                    <li><Link to="/services/f1-visa">F-1 Student Visa</Link></li>
+                    <li><Link to="/services/b1-b2-visa-ext">B-1/B-2 Tourist Visa Status Extension</Link></li>
+                    <li><Link to="/services/change-of-status">Change of Status</Link></li>
+                    <li><Link to="/services/tps">Temporary Protected Status (TPS)</Link></li>
+                    <li><Link to="/services/i765-application">Application for Employment Authorization (I-765)</Link></li>
+                    <li><Link to="/services/i131-application">Application for Travel, Parole, and Arrival/Departure Documents (I-131)</Link></li>
+                    <li><Link to="/services/dv-lottery">DV Lottery Registration for Individuals (In the U.S. and Abroad)</Link></li>
+                    <li><Link to="/services/green-card-dv">Green Card through Winning the DV Lottery (For Applicants in the U.S. and Abroad)</Link></li>
+                    <li><Link to="/services/reparole-ukraine">Re-Parole for Ukraine</Link></li>
+                    <li><Link to="/services/k-fiance-visa">K-1, K-2, K-3, K-4 Visas for Fiancés of U.S. Citizens</Link></li>
+                    <li><Link to="/services/sb1-visa">SB-1 Returning Student Visa</Link></li>
+                    <li><Link to="/services/congress-inquiry">Congressional Inquiry Assistance</Link></li>
                 </ul>
                 </section>
                 <section className="picture">Picture Goes Here</section>
                 <section className="social_media">
+                    <div style={{ 
+                        display: 'inline-flex',
+                        padding: '8px',
+                        borderRadius: '12px',
+                        color: 'white',
+                        background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', 
+                        }}>
+                        <BsInstagram size={48} />
+                    </div>
                     <a href="https://www.instagram.com/america_with_anastasiia/" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
-                        <FaInstagramSquare size={24} />
+                        
                         <span>
                             Follow Us on Instagram
                         </span>
                     </a>
-                    <span> or </span>
-                    <a href="https://ig.me/m/america_with_anastasiia/" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
-                        <FaInstagramSquare size={24} />
-                        <span>
-                            Message Us!
-                        </span>
-                    </a>
                     <br />
+                    <div style={{ 
+                        display: 'inline-flex',
+                        padding: '8px',
+                        borderRadius: '12px',
+                        background: 'white',
+                        }}>
+                        <FaTelegramPlane size={48} color="#0088cc" />
+                    </div>
+                    
                     <a href="https://t.me/americanastasia" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
-                        <FaTelegramPlane size={24} />
                         <span>
                             Message Us on Telegram!
                         </span>
                     </a>
                     <br />
+                    <div style={{ 
+                        display: 'inline-flex',
+                        position: 'relative',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '62px',
+                        height: '62px',
+                        marginLeft: '-2px',
+                        }}>
+                        <div style={{
+                            position: 'absolute',
+                            background: 'white',
+                            width: '50px',
+                            height: '50px',
+                            borderRadius: '8px',
+                        }}>
+                        </div>
+                        <FaWhatsappSquare size={70} color="#25D366" 
+                        style={{ position: 'relative', zIndex: 1}}/>
+                    </div>
+                    <br />
                     <a href="#" onClick={handleWhatsAppClick}>
-                        <FaWhatsappSquare size={24} />
                         <span>
                             Message Us on WhatsApp!
                         </span>
@@ -79,7 +114,9 @@ export default function HomePage() {
             </main>
 
             <footer className="footer">
-                <div className="contact">Contact</div>
+                <div className="contact">
+                    <Link to="/contact_us">Contact Us</Link>
+                </div>
                 <div className="credentials">Credentials</div>
             </footer>
 
