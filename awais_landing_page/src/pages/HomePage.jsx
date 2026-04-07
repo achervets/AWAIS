@@ -53,38 +53,37 @@ export default function HomePage() {
                 </section>
                 <section className="picture">Picture Goes Here</section>
                 <section className="social_media">
-                    <div style={{ 
+                    <a href="https://www.instagram.com/america_with_anastasiia/" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
+                        <div style={{ 
                         display: 'inline-flex',
                         padding: '8px',
                         borderRadius: '12px',
                         color: 'white',
                         background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', 
                         }}>
-                        <BsInstagram size={48} />
-                    </div>
-                    <a href="https://www.instagram.com/america_with_anastasiia/" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
-                        
+                            <BsInstagram size={48} />
+                        </div>
                         <span>
                             Follow Us on Instagram
                         </span>
                     </a>
-                    <br />
-                    <div style={{ 
+                    <br />   
+                    <a href="https://t.me/americanastasia" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
+                        <div style={{ 
                         display: 'inline-flex',
                         padding: '8px',
                         borderRadius: '12px',
                         background: 'white',
                         }}>
-                        <FaTelegramPlane size={48} color="#0088cc" />
-                    </div>
-                    
-                    <a href="https://t.me/americanastasia" target="_blank" rel="noopener noreferrer" style={{display: 'flex'}}>
+                            <FaTelegramPlane size={48} color="#0088cc" />
+                        </div>
                         <span>
                             Message Us on Telegram!
                         </span>
                     </a>
                     <br />
-                    <div style={{ 
+                    <a href="#" onClick={handleWhatsAppClick}>
+                        <div style={{ 
                         display: 'inline-flex',
                         position: 'relative',
                         alignItems: 'center',
@@ -93,19 +92,17 @@ export default function HomePage() {
                         height: '62px',
                         marginLeft: '-2px',
                         }}>
-                        <div style={{
-                            position: 'absolute',
-                            background: 'white',
-                            width: '50px',
-                            height: '50px',
-                            borderRadius: '8px',
-                        }}>
+                            <div style={{
+                                position: 'absolute',
+                                background: 'white',
+                                width: '50px',
+                                height: '50px',
+                                borderRadius: '8px',
+                            }}>
+                            </div>
+                                <FaWhatsappSquare size={70} color="#25D366" 
+                                style={{ position: 'relative', zIndex: 1}}/>
                         </div>
-                        <FaWhatsappSquare size={70} color="#25D366" 
-                        style={{ position: 'relative', zIndex: 1}}/>
-                    </div>
-                    <br />
-                    <a href="#" onClick={handleWhatsAppClick}>
                         <span>
                             Message Us on WhatsApp!
                         </span>
@@ -118,6 +115,9 @@ export default function HomePage() {
                     <Link to="/contact_us">Contact Us</Link>
                 </div>
                 <div className="credentials">Credentials</div>
+                <div>
+                    <p>&copy; {new Date().getFullYear()} Nastya's Visa Emporium. All rights reserved.</p>
+                </div>
             </footer>
 
         </>

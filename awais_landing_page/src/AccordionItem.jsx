@@ -6,7 +6,9 @@ export default function AccordionItem({ title, content}) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div style={{ 
+        <div style={{
+            width: '100%',
+            boxSizing: 'border-box',
             marginBottom: '24px', 
             background: '#f9f9f9',
             borderRadius: '8px',

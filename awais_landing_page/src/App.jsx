@@ -15,19 +15,19 @@ export default function App() {
       <Routes location={location} key={location.pathname}>
 
         <Route path='/' element={
-          <PageTransition>
+          <PageTransition title="Home | Nastya's Visa Emporium">
             <HomePage />
           </PageTransition>
           } />
 
         <Route path='/services/:serviceId' element={
-          <PageTransition>
+          <PageTransition title="Services | Nastya's Visa Emporium">
             <ServicePage />
           </PageTransition>
           } />
 
         <Route path='/contact_us' element={
-          <PageTransition>
+          <PageTransition title="Contact Us | Nastya's Visa Emporium">
             <ContactForm />
           </PageTransition>
           } />

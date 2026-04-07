@@ -58,7 +58,7 @@ export default function ServicePage() {
   }, [serviceId]);
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ width:'100%', boxSizing: 'border-box', maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <h1 style={{ marginBottom: '30px' }}>{pageTitle}</h1>
 
       {pageDescription && (
@@ -91,7 +91,16 @@ export default function ServicePage() {
         </div>
       )}
       
-      <Link to="/" style={{ display: 'block', marginTop: '30px' }}>
+      <Link to="/"
+      style={{ 
+        display: 'inline-block',
+        padding: '12px 24px', 
+        background: '#007BFF', 
+        color: 'white', 
+        textDecoration: 'none',
+        borderRadius: '4px', 
+        fontWeight: 'bold' 
+      }}>
         Back to Home
       </Link> 
     </div>
