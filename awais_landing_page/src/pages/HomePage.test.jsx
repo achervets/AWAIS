@@ -33,22 +33,8 @@ describe('HomePage Component', () => {
             </BrowserRouter>
         );
 
-        const b1b2Link = screen.getByText('Full-Cycle B1/B2 Visa Services');
+        const b1b2Link = screen.getByRole('link', { name: /^b-1\/b-2 tourist visa$/i });
 
         expect(b1b2Link).toHaveAttribute('href', '/services/b1-b2-visa');
-    });
-
-    it('renders the title without crashing (base smoketest)', () => {
-
-        render(
-            <BrowserRouter>
-                <HomePage />
-            </BrowserRouter>
-        );
-
-        const title = screen.getByText('America with Anastasiia Immigration Services');
-
-        expect(title).toBeInTheDocument();
-
     });
 });

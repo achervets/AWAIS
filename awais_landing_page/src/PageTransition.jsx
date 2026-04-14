@@ -16,7 +16,7 @@ export default function PageTransition({ children, title }) {
       
       transition={{ duration: 0.3, ease: "easeOut" }}
 
-      style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}
+      style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0}}
     >
       {children}
     </motion.div>

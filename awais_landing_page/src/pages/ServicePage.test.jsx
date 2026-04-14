@@ -30,20 +30,4 @@ describe('ServicePage Component', () => {
         expect(fetchSpy).toHaveBeenCalled();
         fetchSpy.mockRestore();
     });
-
-    it('uses the correct internal routing path for the homepage link', () => {
-
-        render(
-            <MemoryRouter initialEntries={['/services/b1-b2-visa']}>
-                <Routes>
-                    <Route path="/services/:serviceId" element={<ServicePage />} />
-                </Routes>
-            </MemoryRouter>
-        );
-
-        const homeLink = screen.getByText('Back to Home');
-
-        expect(homeLink).toHaveAttribute('href', '/');
-    });
-
 });

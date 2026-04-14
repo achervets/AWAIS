@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import AccordionItem from '../AccordionItem';
+import './ServicePage.css';
 
 const serviceTitles = {
   "b1-b2-visa": "B-1/B-2 Tourist Visa",
@@ -22,7 +23,7 @@ export default function ServicePage() {
 
   const { serviceId } = useParams();
 
-  const[pageDescription, setPageDescription] = useState("");
+  const [pageDescription, setPageDescription] = useState("");
   const [textChunks, setTextChunks] = useState([]); 
   const [errorMessage, setErrorMessage] = useState(null);
   const pageTitle = serviceTitles[serviceId] || "Immigration Services";
@@ -35,13 +36,13 @@ export default function ServicePage() {
         if (contentType && contentType.includes("text/html")) {
           throw new Error(`Could not find the text file for: ${serviceId}`);
         }
-        if (!response.ok) throw new Error(`Could not fine the file for ${serviceId} (Error ${response.status})`);
+        if (!response.ok) throw new Error(`Could not find the file for ${serviceId} (Error ${response.status})`);
         return response.text();
       })
       .then(text => {
         /* Splitting by newline */
         const sections = text.split(/\n\s*\n/);
-        /* Grabbing the description */
+        /* Extracting the description */
         const introText = sections[0];
         setPageDescription(introText);
         const accordionSections = sections.slice(1);
@@ -58,23 +59,17 @@ export default function ServicePage() {
   }, [serviceId]);
 
   return (
-    <div style={{ width:'100%', boxSizing: 'border-box', maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ marginBottom: '30px' }}>{pageTitle}</h1>
+    <div className="service-page-container">
+      <h1 className="service-page-title">{pageTitle}</h1>
 
       {pageDescription && (
-        <p style={{ 
-          fontSize: '1.1rem', 
-          lineHeight: '1.6', 
-          marginBottom: '30px', 
-          color: '#444',
-          whiteSpace: 'pre-wrap' 
-        }}>
+        <p className="service-page-description">
           {pageDescription}
         </p>
       )}
 
       {errorMessage ? (
-        <div>
+        <div className="service-error-message">
           <strong>Oops! Something went wrong.</strong>
           <br />
           {errorMessage}
@@ -90,19 +85,6 @@ export default function ServicePage() {
           ))}
         </div>
       )}
-      
-      <Link to="/"
-      style={{ 
-        display: 'inline-block',
-        padding: '12px 24px', 
-        background: '#007BFF', 
-        color: 'white', 
-        textDecoration: 'none',
-        borderRadius: '4px', 
-        fontWeight: 'bold' 
-      }}>
-        Back to Home
-      </Link> 
     </div>
   );
 }
