@@ -10,8 +10,13 @@ export default function Layout({ children }) {
                     <div className="title">America with Anastasiia Immigration Services</div>
                 </Link>
                 <div className="auth-buttons">
-                    <button>Log In</button>
-                    <button>Sign Up</button>
+                    <Link to="/login">
+                        <button className="login-btn">Log In</button>
+                    </Link>
+    
+                    <Link to="/register">
+                        <button className="signup-btn">Sign Up</button>
+                    </Link>
                 </div>
             </header>
 
