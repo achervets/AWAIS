@@ -1,65 +1,71 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { authService } from '@/components/backendHelper';
+import '@/styles/FormStyles.css';
 
 export default function LoginPage() {
-
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setMessage("Logging in...");
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: username,
-          password: password
-        }),
+      const userData = await authService.login({
+        username: email,
+        password: password
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage("Success! Welcome back.");
-      } else {
-        setMessage(`Error: ${data.detail}`);
+      if (userData.firstname) {
+        localStorage.setItem('userFirstName', userData.firstname);
       }
+
+      setMessage(`Success! Welcome back, ${userData.firstname}.`);
+
+      setTimeout(() => navigate('/'), 1500);
+      
     } catch (error) {
-      setMessage("Cannot reach the server.");
+      setMessage(`Error: ${error.message}`);
     }
   };
 
-  return (
-    <div className="auth-container">
-      <h2>Log In</h2>
-      
-      <form className="auth-form" onSubmit={handleLogin}>
+  const isError = message.includes("Error");
+  const isSuccess = message.includes("Success");
 
+  return (
+    <div className="form-container">
+      <h2>Log In</h2>
+      <form className="base-form" onSubmit={handleLogin}>
         <input 
-          type="text" 
-          placeholder="Username" 
-          value={username}
-          onChange={(e) => setUsername(e.target.value)} 
+          className="form-input"
+          type="email" 
+          placeholder="Email Address" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)} 
           required 
         />
-        
         <input 
+          className="form-input"
           type="password" 
           placeholder="Password" 
           value={password}
           onChange={(e) => setPassword(e.target.value)} 
           required
         />
-        
-        <button type="submit">
-          Log In
-        </button>
+        <button type="submit" className="form-submit-btn">Log In</button>
       </form>
 
-      {message && <p className="auth-status">{message}</p>}
+      {message && (
+        <p className={`form-status ${isError ? "status-error" : (isSuccess ? "status-success" : "")}`}>
+          {message}
+        </p>
+      )}
+
+      <p className="form-footer-text">
+        Don't have an account? <Link to="/register" className="form-link">Sign Up</Link>
+      </p>
     </div>
   );
 }

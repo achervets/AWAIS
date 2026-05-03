@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import leoProfanity from 'leo-profanity';
-import '@/styles/ContactForm.css';
+import { contactHelper } from '@/components/contactHelper'; 
+import '@/styles/FormStyles.css';
 
 export default function ContactForm() {
   const [result, setResult] = useState("");
@@ -40,25 +41,15 @@ export default function ContactForm() {
     }
 
     setResult("Sending Message...");
-    formData.append("access_key", "26492ee7-14d2-445c-9035-5f68b65fc78b");
 
     try {
-        const response = await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            body: formData
-        });
+        await contactHelper(formData);
 
-        const data = await response.json();
-
-        if (data.success) {
-            setResult("Message sent successfully! We will be in touch soon.");
-            setIsSubmitted(true); // Switch to success state
-        } else {
-            console.log("Error", data);
-            setResult("Oops! Something went wrong. Please try again.");
-        }
+        setResult("Message sent successfully! We will be in touch soon.");
+        setIsSubmitted(true); // Switch to success state
     } catch (error) {
-        setResult("Network error. Please check your internet connection.");
+        console.error("The actual error:", error);
+        setResult(`Oops! Something went wrong. Please try again.`);
     }
   };
 
@@ -71,11 +62,11 @@ export default function ContactForm() {
   const isError = result.includes("Error") || result.includes("Oops") || result.includes("Please");
 
   return (
-    <div className="contact-container">
+    <div className="form-container">
       {isSubmitted ? (
         /* --- SUCCESS STATE --- */
         <div className="success-view">
-          <h2 className="result-success">{result}</h2>
+          <h2 className="status-success">{result}</h2>
           <p>Thank you for reaching out to America with Anastasiia.</p>
           
           <div className="success-buttons">
@@ -91,26 +82,26 @@ export default function ContactForm() {
         /* --- FORM STATE --- */
         <>
           <h2>Contact Us</h2>
-          <form onSubmit={onSubmit} className="contact-form" noValidate>
+          <form onSubmit={onSubmit} className="base-form" noValidate>
             <input 
                 type="text"
                 name="name"
                 placeholder="Your Full Name"
                 required
-                className="contact-input"
+                className="form-input"
             />
             <input
                 type="email"
                 name="email"
                 placeholder="Your Email Address"
                 required
-                className="contact-input"
+                className="form-input"
             />
             <select 
                 name="service" 
                 required 
                 defaultValue=""
-                className="contact-select"
+                className="form-select"
             >
               <option value="" disabled>Select a Service...</option>
               <option value="B-1/B-2 Tourist Visa">B-1/B-2 Tourist Visa</option>
@@ -133,21 +124,21 @@ export default function ContactForm() {
                 placeholder="Your Message Here"
                 required
                 rows="5"
-                className="contact-textarea"
+                className="form-textarea"
             ></textarea>
 
             {/* Honeypot to catch bots */}
-            <input type="checkbox" name="botcheck" className="honeypot" style={{ display: 'none' }} />
+            <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
 
             <button
                 type="submit"
-                className="contact-submit-btn"
+                className="form-submit-btn"
             >Submit
             </button>
           </form>
 
           {result && (
-            <p className={`contact-result ${isError ? "result-error" : "result-success"}`}>
+            <p className={`form-status ${isError ? "status-error" : "status-success"}`}>
               {result}
             </p>
           )}

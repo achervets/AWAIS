@@ -39,15 +39,16 @@ Headers: 'Content-Type: application/json'
 }
 
 #### Success Response
-Code: 200 OK
+Code: 200 OK  
 Content:
 {
   "message": "Login Successful",
   "token": "secret-token"
+  "firstname": "John"
 }
 
 #### Error Response
-Code: 401 Unauthorized
+Code: 401 Unauthorized  
 Content:
 {
   "detail": "Invalid credentials"
@@ -55,8 +56,31 @@ Content:
 
 ---
 
-## STANDARD ERROR RESPONSES
+### 2. Register
+Stores new user information in database.
 
-| 401 | Unauthorized (Bad credentials) | {"detail": "Invalid credentials"} |
-| 422 | Unprocessable Entity (Missing fields) | {"detail": "Field required"} |
-| 500 | Internal Server Error | {"detail": "Server error"} |
+URL: /auth/register
+Method: POST
+Headers: 'Content-Type: application/json'
+
+#### Request Body
+{
+  "firstname": "John",
+  "lastname": "Smith",
+  "email": "jsmith@gmail.com",
+  "password": "password123"
+}
+
+#### Success Response
+Code: 200 OK  
+Content:
+{
+  "status": "success"
+}
+
+#### Error Response
+Code: 400 Bad Request  
+Content:
+{
+  "detail": "An account with this email already exists."
+}
