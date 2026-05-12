@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: .
+    container_name: awais_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./local_db:/app/data
+    environment:
+      - DATABASE_PATH=/app/data/users.db

@@ -43,8 +43,10 @@ Code: 200 OK
 Content:
 {
   "message": "Login Successful",
-  "token": "secret-token"
-  "firstname": "John"
+  "token": "secret-token",
+  "firstname": "John",
+  "lastname": "Smith",
+  "email": "jsmith@gmail.com"
 }
 
 #### Error Response

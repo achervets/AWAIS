@@ -1,23 +1,47 @@
-import json
+import sqlite3
 import os
 
-DB_FILE = "data/users.json"
+DB_PATH = os.getenv("DATABASE_PATH", "users.db")
 
-class Database:
-    def get_all_users(self):
-        if not os.path.exists(DB_FILE):
-            return []
-        with open(DB_FILE, "r") as f:
-            return json.load(f)
+class DatabaseManager:
+    def __init__(self):
+        self._create_table()
 
-    def add_user(self, user_dict):
-        users = self.get_all_users()
-        users.append(user_dict)
-        with open(DB_FILE, "w") as f:
-            json.dump(users, f, indent=4)
+    def _get_connection(self):
+        return sqlite3.connect(DB_PATH)
 
-    def find_user_by_email(self, email):
-        users = self.get_all_users()
-        return next((u for u in users if u["email"].lower() == email.lower()), None)
+    def _create_table(self):
+        with self._get_connection() as conn:
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    firstname TEXT NOT NULL,
+                    lastname TEXT NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL
+                )
+            ''')
 
-db = Database()
+    def add_user(self, user_data):
+        try:
+            with self._get_connection() as conn:
+                conn.execute(
+                    "INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)",
+                    (user_data['firstname'], user_data['lastname'], user_data['email'], user_data['password'])
+                )
+            return True
+        except sqlite3.IntegrityError:
+            return False
+
+    def get_user_by_email(self, email):
+        with self._get_connection() as conn:
+            cursor = conn.execute("SELECT firstname, lastname, email, password FROM users WHERE email = ?", (email,))
+            row = cursor.fetchone()
+            if row:
+                return {
+                    "firstname": row[0],
+                    "lastname": row[1],
+                    "email": row[2],
+                    "password": row[3]
+                }
+            return None

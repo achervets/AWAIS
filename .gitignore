@@ -30,3 +30,4 @@ venv/
 *.py[cod]
 .env
 backend/data/users.json
+localdb/
