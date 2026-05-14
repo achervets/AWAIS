@@ -18,11 +18,11 @@ export default function LoginPage() {
         username: email,
         password: password
       });
-      if (userData.firstname) {
-        localStorage.setItem('userFirstName', userData.firstname);
+      if (userData.user.firstname) {
+        localStorage.setItem('userFirstName', userData.user.firstname);
       }
 
-      setMessage(`Success! Welcome back, ${userData.firstname}.`);
+      setMessage(`Success! Welcome back, ${userData.user.firstname}.`);
 
       setTimeout(() => navigate('/'), 1500);
       
