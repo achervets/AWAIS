@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import leoProfanity from 'leo-profanity';
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import { contactHelper } from '@/components/contactHelper'; 
 import '@/styles/FormStyles.css';
+import 'react-phone-number-input/style.css';
 
 export default function ContactForm() {
   const [result, setResult] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false); // Track success state
+  const [phone, setPhone] = useState(""); // Track phone state
+  const [preferredLanguage, setPreferredLanguage] = useState("English"); // Track language choice
+  const [preferredPlatform, setPreferredPlatform] = useState("Telegram"); // Track platform choice
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -27,6 +32,22 @@ export default function ContactForm() {
       setResult("Please enter a valid email address.");
       return;
     }
+
+    // Phone Number Validation
+    if (!phone) {
+      setResult("Please enter your phone number.");
+      return;
+    }
+
+    if (!isValidPhoneNumber(phone)) {
+      setResult("Please enter a valid phone number.");
+      return;
+    }
+
+    // Append phone, language, and platform states into the FormData payload
+    formData.append("Phone Number", phone);
+    formData.append("Preferred Language", preferredLanguage);
+    formData.append("Preferred Messaging Platform", preferredPlatform);
 
     // Length Validation
     if (message.trim().length < 10) {
@@ -56,6 +77,9 @@ export default function ContactForm() {
   const handleReset = () => {
     setResult("");
     setIsSubmitted(false);
+    setPhone("");
+    setPreferredLanguage("English");
+    setPreferredPlatform("Telegram");
   };
 
   // Determine if the message is an error
@@ -97,6 +121,59 @@ export default function ContactForm() {
                 required
                 className="form-input"
             />
+            
+            <div className="language-selector-container">
+              <label className="language-label">Preferred Language</label>
+              <div className="language-buttons-row">
+                <button
+                  type="button"
+                  className={`lang-btn ${preferredLanguage === "English" ? "active" : ""}`}
+                  onClick={() => setPreferredLanguage("English")}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  className={`lang-btn ${preferredLanguage === "Russian" ? "active" : ""}`}
+                  onClick={() => setPreferredLanguage("Russian")}
+                >
+                  Russian
+                </button>
+              </div>
+            </div>
+
+            <div className="language-selector-container">
+              <label className="language-label">Preferred Messaging Platform</label>
+              <div className="language-buttons-row">
+                <button
+                  type="button"
+                  className={`lang-btn ${preferredPlatform === "Telegram" ? "active" : ""}`}
+                  onClick={() => setPreferredPlatform("Telegram")}
+                >
+                  Telegram
+                </button>
+                <button
+                  type="button"
+                  className={`lang-btn ${preferredPlatform === "WhatsApp" ? "active" : ""}`}
+                  onClick={() => setPreferredPlatform("WhatsApp")}
+                >
+                  WhatsApp
+                </button>
+              </div>
+            </div>
+
+            <PhoneInput
+                defaultCountry="US"
+                countries={['US', 'RU', 'UA']}
+                addInternationalOption={false}
+                international
+                value={phone}
+                onChange={setPhone}
+                placeholder="Your Phone Number"
+                required
+                className="form-input"
+            />
+
             <select 
                 name="service" 
                 required 

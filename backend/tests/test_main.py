@@ -4,9 +4,8 @@ from fastapi.testclient import TestClient
 from main import app
 
 class TestMainAPI(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.client = TestClient(app)
+    def setUp(self):
+        self.client = TestClient(app)
 
     def test_health_check(self):
         response = self.client.get("/health")
@@ -66,7 +65,7 @@ class TestMainAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["message"], "Login Successful")
-        self.assertEqual(data["firstname"], firstname)
+        self.assertEqual(data["user"]["firstname"], firstname)
         self.assertIn("token", data)
 
     def test_login_invalid_credentials(self):

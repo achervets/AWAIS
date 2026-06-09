@@ -2,7 +2,8 @@ from fastapi import FastAPI, status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from database_manager import DatabaseManager
-from passlib.context import CryptContext
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 
 app = FastAPI()
 db = DatabaseManager()
@@ -25,13 +26,16 @@ class UserSchema(BaseModel):
     email: EmailStr
     password: str
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+ph = PasswordHasher()
 
 def hash_password(password: str):
-    return pwd_context.hash(password)
+    return ph.hash(password)
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        return ph.verify(hashed_password, plain_password)
+    except VerifyMismatchError:
+        return False
 
 @app.get("/")
 def root():

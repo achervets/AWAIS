@@ -5,6 +5,7 @@ import Layout from '@/components/Layout';
 import HomePage from '@/pages/HomePage';
 import ServicePage from '@/pages/ServicePage';
 import ContactForm from '@/pages/ContactForm';
+import NewsPage from '@/pages/NewsPage';
 import PageTransition from '@/components/PageTransition';
 import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
@@ -48,6 +49,12 @@ export default function App() {
           <Route path='/register' element={
             <PageTransition title="Register | Nastya's Visa Emporium">
               <RegisterPage />
+            </PageTransition>
+            } />
+
+          <Route path='/news' element={
+            <PageTransition title="News | Nastya's Visa Emporium">
+              <NewsPage />
             </PageTransition>
             } />
 

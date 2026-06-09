@@ -30,7 +30,46 @@ export default function HomePage() {
 
             <div className="home_grid">
                 <section className="description">
-                <p>This is a description(tm)</p>
+                <h1>A Letter From the Founder</h1>
+                <p>Dear Clients,
+                    Welcome to America with Anastasiia Visa Agency
+                     - your trusted partner for visa support, document services, and 
+                     travel planning.
+                </p>
+                <p>
+                    My name is Anastasiia Pavlyukova, and I am the founder of America with 
+                    Anastasiia. I am originally from Ukraine. Before starting this company, 
+                    I spent five years working with leading immigration law firms in the
+                     U.S., helping with different types of visas and immigration cases.
+                </p>
+                <p>
+                    America with Anastasiia was created for people who want to feel supported,
+                     understood, and confident during an important step in their life. 
+                     We know that every visa, every document, and every application carries 
+                     a personal story behind it - a family visit, a student dream, a new 
+                     opportunity, a safe stay, a long-awaited trip, or a fresh start.
+                </p>
+                <p>
+                    Our team believes in your success and is ready to support you at every 
+                    stage of your journey. We use an individual approach to every client and 
+                    every case, carefully reviewing your situation, documents, goals, and 
+                    needs. We do not treat your case like standard paperwork - we treat it 
+                    with attention, responsibility, and care.
+                </p>
+                <p>
+                    At America with Anastasiia, we want the process to feel clear, 
+                    organized, and less stressful. Our goal is not only to prepare your 
+                    application, but also to create a warm and welcoming experience where 
+                    you feel heard, guided, and never left alone with confusing paperwork.
+                </p>
+                <p>
+                    We stay in touch with our clients throughout the process and even after the work is done. Your plans, your peace of mind, and your future matter to us, and we are honored to be part of your next step.
+                </p>
+                <p>
+                    With respect,<br />
+                    Anastasiia Pavlyukova<br />
+                    Founder, America with Anastasiia Visa Agency
+                </p>
                 </section>
                 
                 <section className="services">
@@ -78,7 +117,11 @@ export default function HomePage() {
                 </div>
                 </section>
                 
-                <section className="picture">Picture Goes Here</section>
+                <section className="picture">
+                    <Link to="/news">
+                        <button>No news is good news? Bullshit!</button>
+                    </Link>
+                </section>
                 
                 <section className="social_media">
                     <a href="https://www.instagram.com/america_with_anastasiia/" target="_blank" rel="noopener noreferrer">
