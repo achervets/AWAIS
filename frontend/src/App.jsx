@@ -10,13 +10,14 @@ import PageTransition from '@/components/PageTransition';
 import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
 import ApiTest from '@/components/ApiTest';
+import AdminPage from '@/pages/AdminPage'
 
 export default function App() {
 
   const location = useLocation();
 
   return (
-    /* The Layout wraps everything, making it completely immune to the page animations */
+    /* The Layout wraps everything, making it immune to the page animations */
     <Layout>
       <ApiTest />
       <AnimatePresence mode="wait">
@@ -55,6 +56,12 @@ export default function App() {
           <Route path='/news' element={
             <PageTransition title="News | Nastya's Visa Emporium">
               <NewsPage />
+            </PageTransition>
+            } />
+
+          <Route path='/admin' element={
+            <PageTransition title="Admin | Nastya's Visa Emporium">
+              <AdminPage />
             </PageTransition>
             } />
 

@@ -18,6 +18,8 @@
   padding: 5px 20px;
   background-color: bisque;
   box-sizing: border-box;
+  position: relative;
+  z-index: 100;
 }
 
 .footer {
@@ -27,4 +29,118 @@
   padding: 5px 20px;
   background-color: bisque;
   box-sizing: border-box;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4b5563;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover, .dropdown-trigger:hover {
+  color: #1f2937;
+}
+
+.nav-link.active, .nav-dropdown-wrapper.active .dropdown-trigger {
+  color: #0073e6;
+  font-weight: 600;
+}
+
+.nav-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-trigger {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.arrow-down {
+  font-size: 0.65rem;
+  margin-left: 5px;
+}
+
+.arrow-right {
+  font-size: 0.65rem;
+  margin-left: auto;
+  padding-left: 10px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 220px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  list-style: none;
+  padding: 6px 0;
+  margin: 0;
+}
+
+.level-1 {
+  top: 100%;
+  left: 0;
+  padding-top: 10px;
+}
+
+.level-1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: transparent;
+}
+
+.dropdown-item {
+  position: relative;
+}
+
+.dropdown-item a, .submenu-trigger {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdown-item a:hover, .submenu-trigger:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.has-submenu {
+  position: relative;
+}
+
+.level-2 {
+  top: -6px;
+  left: 100%;
+  margin-left: 2px;
+}
+
+.nav-dropdown-wrapper:hover .level-1 {
+  display: block;
+}
+
+.has-submenu:hover .level-2 {
+  display: block;
 }
