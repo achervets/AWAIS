@@ -13,7 +13,7 @@ export default function Layout({ children }) {
     }, [location]);
 
     const handleLogout = () => {
-        localStorage.removeItem('userFirstName');
+        localStorage.clear(); 
         setFirstName(null);
         navigate('/login');
     };
@@ -23,7 +23,7 @@ export default function Layout({ children }) {
             
             <header className="header">
                 <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <div className="title">America with Anastasiia Immigration Services</div>
+                    <div className="title">Insert Logo Here</div>
                 </Link>
 
                 <nav className="header-nav">
@@ -70,29 +70,11 @@ export default function Layout({ children }) {
                         Contact Us
                     </Link>
 
-                    <Link to="/admin" className={`nav-link ${location.pathname.startsWith('/admin') ? 'active' : ''}`}>
-                        Admin
+                    <Link to="/news" className={`nav-link ${location.pathname.startsWith('/news') ? 'active' : ''}`}>
+                        News
                     </Link>
                 </nav>
                 
-                <div className="auth-buttons">
-                    {firstName ? (
-                        <div className="user-greeting-container" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                            <span className="welcome-text">Hi, {firstName}</span>
-                            <button className="login-btn" onClick={handleLogout}>Log Out</button>
-                        </div>
-                    ) : (
-                        <>
-                            <Link to="/login">
-                                <button className="login-btn">Log In</button>
-                            </Link>
-            
-                            <Link to="/register">
-                                <button className="signup-btn">Sign Up</button>
-                            </Link>
-                        </>
-                    )}
-                </div>
             </header>
 
             <main className="inner_page"> 
@@ -103,7 +85,24 @@ export default function Layout({ children }) {
                 <div className="contact">
                     <Link to="/contact_us">Contact Us</Link>
                 </div>
-                <div className="credentials">Credentials</div>
+                <div className="auth-buttons">
+                    {firstName ? (
+                        <div className="user-greeting-container" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                            <span className="welcome-text">Hi, {firstName}</span>
+                            <button className="login-btn" onClick={handleLogout}>Log Out</button>
+                        </div>
+                    ) : (
+                        <>
+                            <Link to="/login">
+                                <button className="login-btn">Admin Log In</button>
+                            </Link>
+            
+                            <Link to="/register">
+                                <button className="signup-btn">?Register?</button>
+                            </Link>
+                        </>
+                    )}
+                </div>
                 <div>
                     <p>&copy; {new Date().getFullYear()} Nastya's Visa Emporium. All rights reserved.</p>
                 </div>

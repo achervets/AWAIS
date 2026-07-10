@@ -17,6 +17,24 @@ export default function AdminPage() {
         const file = e.target.files[0];
         if (!file) return;
 
+        setStatus({ type: '', message: '' });
+
+        const allowedTypes = ['image/jpeg', 'image/jpg'];
+        if (!allowedTypes.includes(file.type)) {
+            setStatus({ type: 'error', message: 'Invalid file format. Image must be a .jpg or .jpeg file.' });
+            e.target.value = '';
+            setFormData(prev => ({ ...prev, picture: '' }));
+            return;
+        }
+
+        const maxBytes = 10 * 1024 * 1024;
+        if (file.size > maxBytes) {
+            setStatus({ type: 'error', message: 'File is too large. Image size cannot exceed 10 MB.' });
+            e.target.value = '';
+            setFormData(prev => ({ ...prev, picture: '' }));
+            return;
+        }
+
         const reader = new FileReader();
         reader.onloadend = () => {
             setFormData(prev => ({
@@ -102,7 +120,7 @@ export default function AdminPage() {
                     <input
                         type="file"
                         id="picture"
-                        accept="image/*"
+                        accept=".jpg,.jpeg"
                         className="form-input"
                         style={{ background: 'white' }}
                         onChange={handleFileChange}

@@ -6,7 +6,21 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-      - ./local_db:/app/data
     environment:
-      - DATABASE_PATH=/app/data/users.db
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@db:5432/awais_db
       - PYTHONUNBUFFERED=1
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: awais_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=awais_db
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data

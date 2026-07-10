@@ -19,7 +19,6 @@ export default function App() {
   return (
     /* The Layout wraps everything, making it immune to the page animations */
     <Layout>
-      <ApiTest />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
 

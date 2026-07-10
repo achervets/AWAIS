@@ -18,7 +18,12 @@ export default function LoginPage() {
         username: email,
         password: password
       });
-      if (userData.user.firstname) {
+
+      if (userData.token) {
+        localStorage.setItem('token', userData.token);
+      }
+      
+      if (userData.user && userData.user.firstname) {
         localStorage.setItem('userFirstName', userData.user.firstname);
       }
 

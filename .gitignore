@@ -32,3 +32,4 @@ venv/
 backend/data/users.json
 localdb/
 users.db
+postgres_data/
