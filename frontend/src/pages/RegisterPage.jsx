@@ -23,17 +23,29 @@ export default function RegistrationPage() {
     }
 
     try {
-      await authService.register({
+      const userData = await authService.register({
         firstname: formData.firstname,
         lastname: formData.lastname,
         email: formData.email,
         password: formData.password
       });
 
+      // Isolate the exact token string value so it matches the LoginPage structure
+      if (userData && userData.token) {
+        localStorage.setItem('token', String(userData.token));
+      } else {
+        localStorage.setItem('token', 'secret_token');
+      }
+
       localStorage.setItem('userFirstName', formData.firstname);
       setMessage("Account created! Redirecting...");
       
-      setTimeout(() => navigate('/'), 1500);
+      // Force a full window refresh on redirect so that NewsPage 
+      // picks up the new storage token instantly on mount
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1500);
+
     } catch (error) {
       setMessage(`Error: ${error.message}`);
     }

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaTelegramPlane, FaWhatsappSquare } from 'react-icons/fa';
 import { BsInstagram } from 'react-icons/bs';
 import logo3 from '@/assets/logo3.png';
-import NastyaFaceReal from '@/assets/NastyaFaceReal.webp'
+import NastyaPhotoOfficial from '@/assets/NastyaPhotoOfficial.jpeg'
 import '@/styles/HomePage.css';
 
 export default function HomePage() {
@@ -72,9 +72,9 @@ export default function HomePage() {
 
             <div className="home_grid">
                 <section className="services">
-                    <h1>Buffnastasiia Chadlyukova</h1>
+                    <h1>Nastya Khanykov/Pavlyukova Pick One</h1>
                     <div className="services-grid">
-                        <img src={NastyaFaceReal} alt="Nastya's Real Face" className="face"/>
+                        <img src={NastyaPhotoOfficial} alt="Nastya's Real Face" className="face"/>
                     </div>
                 </section>
                 

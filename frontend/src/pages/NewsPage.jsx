@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '@/styles/NewsPage.css';
 
-function NewsPostCard({ post, formatDate, isLoggedIn, onRefresh }) {
-    const [isExpanded, setIsExpanded] = useState(false);
+function NewsPostCard({ post, formatDate, isLoggedIn, onRefresh, isExpanded, onToggleExpand }) {
     const [isEditing, setIsEditing] = useState(false);
     
     const [editTitle, setEditTitle] = useState(post.title);
@@ -159,7 +158,7 @@ function NewsPostCard({ post, formatDate, isLoggedIn, onRefresh }) {
     }
 
     return (
-        <article className="news-post-card">
+        <article className={`news-post-card ${isExpanded ? 'focused-expanded' : ''}`}>
             {post.picture && (
                 <img 
                     src={post.picture.startsWith('data:') ? post.picture : `data:image/jpeg;base64,${post.picture}`} 
@@ -183,7 +182,7 @@ function NewsPostCard({ post, formatDate, isLoggedIn, onRefresh }) {
             )}
 
             <button 
-                onClick={() => setIsExpanded(!isExpanded)} 
+                onClick={onToggleExpand} 
                 className="news-post-toggle-btn"
             >
                 {isExpanded ? 'Read Less ▲' : 'Read More ▼'}
@@ -209,18 +208,16 @@ export default function NewsPage() {
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
+    
+    const [expandedPostId, setExpandedPostId] = useState(null);
+
     const navigate = useNavigate();
     const LIMIT = 5;
-
     const isFetching = useRef(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token'); 
-        if (token) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false); 
-        }
+        setIsLoggedIn(!!token);
     }, []);
 
     const fetchNewsData = async (currentOffset, clearExisting = false) => {
@@ -234,11 +231,7 @@ export default function NewsPage() {
                 const data = await response.json();
                 
                 if (data && Array.isArray(data.posts)) {
-                    if (data.posts.length < LIMIT) {
-                        setHasMore(false);
-                    } else {
-                        setHasMore(true);
-                    }
+                    setHasMore(data.posts.length === LIMIT);
                     
                     if (clearExisting) {
                         setPosts(data.posts);
@@ -256,6 +249,7 @@ export default function NewsPage() {
     };
 
     const handleRefreshFeed = () => {
+        setExpandedPostId(null);
         setOffset(0);
         fetchNewsData(0, true);
     };
@@ -271,7 +265,7 @@ export default function NewsPage() {
             const docHeight = document.documentElement.scrollHeight;
 
             if (docHeight - (scrollTop + windowHeight) < 100) {
-                if (hasMore && !isFetching.current) {
+                if (hasMore && !loading && !isFetching.current) {
                     setOffset(prevOffset => prevOffset + LIMIT);
                 }
             }
@@ -279,13 +273,17 @@ export default function NewsPage() {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [hasMore]);
+    }, [hasMore, loading]);
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString + 'Z');
         if (isNaN(date.getTime())) return 'Unknown Date';
         return date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    };
+
+    const handleToggleExpand = (postId) => {
+        setExpandedPostId(prevId => (prevId === postId ? null : postId));
     };
 
     return (
@@ -315,6 +313,8 @@ export default function NewsPage() {
                         formatDate={formatDate}
                         isLoggedIn={isLoggedIn}
                         onRefresh={handleRefreshFeed}
+                        isExpanded={expandedPostId === post.id}
+                        onToggleExpand={() => handleToggleExpand(post.id)}
                     />
                 ))}
             </div>

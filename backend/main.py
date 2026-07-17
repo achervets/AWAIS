@@ -89,7 +89,16 @@ async def register(user: UserSchema):
     success = db.add_user(user_data)
     if not success:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="An account with this email already exists.")
-    return {"message": "User registered successfully!"}
+    
+    return {
+        "message": "User registered successfully!",
+        "token": "secret_token",
+        "user": {
+            "firstname": user.firstname,
+            "lastname": user.lastname,
+            "email": user.email
+        }
+    }
 
 @app.post("/api/news", status_code=status.HTTP_201_CREATED)
 async def add_news(post: NewsSchema):

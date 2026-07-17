@@ -21,7 +21,7 @@ export default function AdminPage() {
 
         const allowedTypes = ['image/jpeg', 'image/jpg'];
         if (!allowedTypes.includes(file.type)) {
-            setStatus({ type: 'error', message: 'Invalid file format. Image must be a .jpg or .jpeg file.' });
+            window.alert('Invalid file format. Image must be a .jpg or .jpeg file.');
             e.target.value = '';
             setFormData(prev => ({ ...prev, picture: '' }));
             return;
@@ -29,7 +29,7 @@ export default function AdminPage() {
 
         const maxBytes = 10 * 1024 * 1024;
         if (file.size > maxBytes) {
-            setStatus({ type: 'error', message: 'File is too large. Image size cannot exceed 10 MB.' });
+            window.alert('File is too large. Image size cannot exceed 10 MB.');
             e.target.value = '';
             setFormData(prev => ({ ...prev, picture: '' }));
             return;
@@ -58,7 +58,7 @@ export default function AdminPage() {
         setStatus({ type: '', message: '' });
 
         if (!formData.title || !formData.summary || !formData.body) {
-            setStatus({ type: 'error', message: 'Please fill out all text fields.' });
+            window.alert('Please fill out all text fields.');
             return;
         }
 
