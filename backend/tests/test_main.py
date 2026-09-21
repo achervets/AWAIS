@@ -1,3 +1,4 @@
+import os
 import uuid
 import unittest
 from fastapi.testclient import TestClient
@@ -6,6 +7,9 @@ from main import app
 class TestMainAPI(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
+        self.registration_headers = {
+            "X-Registration-Key": os.getenv("ADMIN_REGISTRATION_KEY", "")
+        }
 
     def test_health_check(self):
         response = self.client.get("/health")
@@ -22,7 +26,11 @@ class TestMainAPI(unittest.TestCase):
             "password": "securepassword123"
         }
         
-        response = self.client.post("/auth/register", json=payload)
+        response = self.client.post(
+            "/auth/register",
+            json=payload,
+            headers=self.registration_headers,
+        )
         
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["message"], "User registered successfully!")
@@ -36,9 +44,17 @@ class TestMainAPI(unittest.TestCase):
             "password": "password123"
         }
 
-        self.client.post("/auth/register", json=payload)
+        self.client.post(
+            "/auth/register",
+            json=payload,
+            headers=self.registration_headers,
+        )
         
-        response = self.client.post("/auth/register", json=payload)
+        response = self.client.post(
+            "/auth/register",
+            json=payload,
+            headers=self.registration_headers,
+        )
         
         self.assertEqual(response.status_code, 400)
         self.assertIn("already exists", response.json()["detail"])
@@ -54,7 +70,11 @@ class TestMainAPI(unittest.TestCase):
             "email": unique_email,
             "password": password
         }
-        self.client.post("/auth/register", json=register_payload)
+        self.client.post(
+            "/auth/register",
+            json=register_payload,
+            headers=self.registration_headers,
+        )
 
         login_payload = {
             "username": unique_email,

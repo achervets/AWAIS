@@ -3,19 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaTelegramPlane, FaWhatsappSquare } from 'react-icons/fa';
 import { BsInstagram } from 'react-icons/bs';
 import logo3 from '@/assets/logo3.png';
-import NastyaPhotoOfficial from '@/assets/NastyaPhotoOfficial.jpeg'
+import NastyaPhotoOfficial from '@/assets/NastyaPhotoOfficial-web.jpeg'
 import '@/styles/HomePage.css';
+import { apiUrl } from '@/config/api';
 
 export default function HomePage() {
     const [latestPost, setLatestPost] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
     const part1 = "170776"
     const part2 = "19120"
 
-    const messageText = "Test Message DNR";
+    const messageText = "Hello! I would like to learn more about your immigration services.";
 
     const handleWhatsAppClick = (event) => {
         event.preventDefault();
@@ -26,29 +26,18 @@ export default function HomePage() {
         window.open(whatsappURL, '_blank', 'noopener,noreferrer');
     };
 
-    const handleLogout = () => {
-        localStorage.clear();
-        setIsLoggedIn(false);
-        navigate('/');
-    };
-
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-        }
-
         const fetchLatestNews = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/news?limit=1&offset=0');
+                const response = await fetch(apiUrl('/api/news?limit=1&offset=0'));
                 if (response.ok) {
                     const data = await response.json();
                     if (data && Array.isArray(data.posts) && data.posts.length > 0) {
                         setLatestPost(data.posts[0]);
                     }
                 }
-            } catch (error) {
-                console.error("Error fetching latest news:", error);
+            } catch {
+                // News is optional content; keep the rest of the home page usable if it is offline.
             } finally {
                 setLoading(false);
             }
@@ -72,9 +61,13 @@ export default function HomePage() {
 
             <div className="home_grid">
                 <section className="services">
-                    <h1>Nastya Khanykov/Pavlyukova Pick One</h1>
+                    <h1>Immigration Services</h1>
                     <div className="services-grid">
-                        <img src={NastyaPhotoOfficial} alt="Nastya's Real Face" className="face"/>
+                        <img src={NastyaPhotoOfficial} alt="Anastasiia Pavlyukova, founder of America with Anastasiia" className="face"/>
+                        <Link to="/services/b1-b2-visa">B-1/B-2 Tourist Visa</Link>
+                        <Link to="/services/f1-visa">F-1 Student Visa</Link>
+                        <Link to="/services/change-of-status">Change of Status</Link>
+                        <Link to="/contact_us">View all services and contact us</Link>
                     </div>
                 </section>
                 
@@ -93,7 +86,7 @@ export default function HomePage() {
                         <span>Message Us on Telegram!</span>
                     </a>
                     <br />
-                    <a href="#" onClick={handleWhatsAppClick}>
+                    <a href="https://wa.me/17077619120" onClick={handleWhatsAppClick} target="_blank" rel="noopener noreferrer">
                         <div className="whatsapp-container">
                             <div className="whatsapp-inner-bg"></div>
                             <FaWhatsappSquare className="whatsapp-icon" />
@@ -133,7 +126,7 @@ export default function HomePage() {
                             </button>
                         </div>
                     ) : (
-                        <p>No recent news posts found.</p>
+                        <p>Visit our news page for future updates.</p>
                     )}
                 </section>
             </div>

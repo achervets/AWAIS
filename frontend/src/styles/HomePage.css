@@ -213,3 +213,9 @@ body {
     justify-self: stretch !important;
   }
 }
+
+.services-grid a {
+  color: #075aab;
+  font-weight: 600;
+  line-height: 1.4;
+}

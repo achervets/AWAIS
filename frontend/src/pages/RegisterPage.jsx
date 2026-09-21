@@ -5,7 +5,7 @@ import '@/styles/FormStyles.css';
 
 export default function RegistrationPage() {
   const [formData, setFormData] = useState({
-    firstname: "", lastname: "", email: "", password: "", confirmPassword: ""
+    firstname: "", lastname: "", email: "", password: "", confirmPassword: "", registrationKey: ""
   });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -28,23 +28,14 @@ export default function RegistrationPage() {
         lastname: formData.lastname,
         email: formData.email,
         password: formData.password
-      });
+      }, formData.registrationKey);
 
-      // Isolate the exact token string value so it matches the LoginPage structure
-      if (userData && userData.token) {
-        localStorage.setItem('token', String(userData.token));
-      } else {
-        localStorage.setItem('token', 'secret_token');
-      }
+      localStorage.setItem('token', String(userData.token));
 
       localStorage.setItem('userFirstName', formData.firstname);
       setMessage("Account created! Redirecting...");
       
-      // Force a full window refresh on redirect so that NewsPage 
-      // picks up the new storage token instantly on mount
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 1500);
+      setTimeout(() => navigate('/'), 1500);
 
     } catch (error) {
       setMessage(`Error: ${error.message}`);
@@ -55,7 +46,7 @@ export default function RegistrationPage() {
 
   return (
     <div className="form-container">
-      <h2>Create an Account</h2>
+      <h2>Create an Admin Account</h2>
       <form className="base-form" onSubmit={handleRegister}>
         <div className="form-row" style={{ display: 'flex', gap: '15px' }}>
           <input className="form-input" name="firstname" placeholder="First Name" value={formData.firstname} onChange={handleChange} required />
@@ -64,6 +55,7 @@ export default function RegistrationPage() {
         <input className="form-input" type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required />
         <input className="form-input" type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
         <input className="form-input" type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} required />
+        <input className="form-input" type="password" name="registrationKey" placeholder="Admin setup key" value={formData.registrationKey} onChange={handleChange} required />
         <button type="submit" className="form-submit-btn">Sign Up</button>
       </form>
       {message && <p className={`form-status ${isError ? "status-error" : "status-success"}`}>{message}</p>}

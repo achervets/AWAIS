@@ -1,16 +1,32 @@
+import { lazy, Suspense } from 'react';
 import '@/styles/App.css';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Layout from '@/components/Layout';
-import HomePage from '@/pages/HomePage';
-import ServicePage from '@/pages/ServicePage';
-import ContactForm from '@/pages/ContactForm';
-import NewsPage from '@/pages/NewsPage';
 import PageTransition from '@/components/PageTransition';
-import LoginPage from '@/pages/LoginPage';
-import RegisterPage from '@/pages/RegisterPage';
-import ApiTest from '@/components/ApiTest';
-import AdminPage from '@/pages/AdminPage'
+
+const HomePage = lazy(() => import('@/pages/HomePage'));
+const ServicePage = lazy(() => import('@/pages/ServicePage'));
+const ContactForm = lazy(() => import('@/pages/ContactForm'));
+const NewsPage = lazy(() => import('@/pages/NewsPage'));
+const LoginPage = lazy(() => import('@/pages/LoginPage'));
+const RegisterPage = lazy(() => import('@/pages/RegisterPage'));
+const AdminPage = lazy(() => import('@/pages/AdminPage'));
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'));
+
+function RequireAdmin({ children }) {
+  return localStorage.getItem('token') ? children : <Navigate to="/login" replace />;
+}
+
+function NotFoundPage() {
+  return (
+    <div className="not-found-page">
+      <h1>Page not found</h1>
+      <p>The page you requested does not exist.</p>
+      <a href="/">Return to the home page</a>
+    </div>
+  );
+}
 
 export default function App() {
 
@@ -20,51 +36,65 @@ export default function App() {
     /* The Layout wraps everything, making it immune to the page animations */
     <Layout>
       <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
+        <Suspense fallback={<p className="route-loading" role="status">Loading…</p>}>
+          <Routes location={location} key={location.pathname}>
 
           <Route path='/' element={
-            <PageTransition title="Home | Nastya's Visa Emporium">
+            <PageTransition title="Home | America with Anastasiia">
               <HomePage />
             </PageTransition>
             } />
 
           <Route path='/services/:serviceId' element={
-            <PageTransition title="Services | Nastya's Visa Emporium">
+            <PageTransition title="Services | America with Anastasiia">
               <ServicePage />
             </PageTransition>
             } />
 
           <Route path='/contact_us' element={
-            <PageTransition title="Contact Us | Nastya's Visa Emporium">
+            <PageTransition title="Contact Us | America with Anastasiia">
               <ContactForm />
             </PageTransition>
             } />
 
           <Route path='/login' element={
-            <PageTransition title="Login | Nastya's Visa Emporium">
+            <PageTransition title="Admin Login | America with Anastasiia">
               <LoginPage />
             </PageTransition>
             } />
 
           <Route path='/register' element={
-            <PageTransition title="Register | Nastya's Visa Emporium">
+            <PageTransition title="Admin Setup | America with Anastasiia">
               <RegisterPage />
             </PageTransition>
             } />
 
           <Route path='/news' element={
-            <PageTransition title="News | Nastya's Visa Emporium">
+            <PageTransition title="News | America with Anastasiia">
               <NewsPage />
             </PageTransition>
             } />
 
-          <Route path='/admin' element={
-            <PageTransition title="Admin | Nastya's Visa Emporium">
-              <AdminPage />
+          <Route path='/privacy' element={
+            <PageTransition title="Privacy Policy | America with Anastasiia">
+              <PrivacyPolicy />
             </PageTransition>
             } />
 
-        </Routes>
+          <Route path='/admin' element={
+            <PageTransition title="Admin | America with Anastasiia">
+              <RequireAdmin><AdminPage /></RequireAdmin>
+            </PageTransition>
+            } />
+
+          <Route path="*" element={
+            <PageTransition title="Page Not Found | America with Anastasiia">
+              <NotFoundPage />
+            </PageTransition>
+          } />
+
+          </Routes>
+        </Suspense>
       </AnimatePresence>
     </Layout>
   );

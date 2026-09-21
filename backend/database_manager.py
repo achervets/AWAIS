@@ -2,7 +2,7 @@ import psycopg2
 import os
 import time
 
-DB_URL = os.getenv("DATABASE_URL", "postgresql://postgres:mysecretpassword@db:5432/awais_db")
+DB_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/awais_db")
 
 class DatabaseManager:
     def __init__(self):

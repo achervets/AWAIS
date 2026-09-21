@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:8000';
+import { apiUrl } from '@/config/api';
 
 async function handleResponse(response) {
   const data = await response.json();
@@ -9,18 +9,20 @@ async function handleResponse(response) {
 }
 
 export const authService = {
-  async register(userData) {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+  async register(userData, registrationKey) {
+    const response = await fetch(apiUrl('/auth/register'), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(registrationKey ? { 'X-Registration-Key': registrationKey } : {}),
+      },
       body: JSON.stringify(userData),
     });
     return handleResponse(response);
   },
 
   async login(credentials) {
-    // Standardized to use API_BASE_URL and handleResponse helper
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    const response = await fetch(apiUrl('/auth/login'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),

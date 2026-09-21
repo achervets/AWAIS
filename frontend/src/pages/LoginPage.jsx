@@ -69,7 +69,7 @@ export default function LoginPage() {
       )}
 
       <p className="form-footer-text">
-        Don't have an account? <Link to="/register" className="form-link">Sign Up</Link>
+        First-time setup? <Link to="/register" className="form-link">Create an admin account</Link>
       </p>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '@/styles/NewsPage.css';
+import { apiUrl, authHeaders } from '@/config/api';
 
 function NewsPostCard({ post, formatDate, isLoggedIn, onRefresh, isExpanded, onToggleExpand }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -17,8 +18,9 @@ function NewsPostCard({ post, formatDate, isLoggedIn, onRefresh, isExpanded, onT
         if (!confirmDelete) return;
 
         try {
-            const response = await fetch(`http://localhost:8000/api/news/${post.id}`, {
+            const response = await fetch(apiUrl(`/api/news/${post.id}`), {
                 method: 'DELETE',
+                headers: authHeaders(),
             });
 
             if (response.ok) {
@@ -65,11 +67,11 @@ function NewsPostCard({ post, formatDate, isLoggedIn, onRefresh, isExpanded, onT
         };
 
         try {
-            const response = await fetch(`http://localhost:8000/api/news/${post.id}`, {
+            const response = await fetch(apiUrl(`/api/news/${post.id}`), {
                 method: 'PUT',
-                headers: {
+                headers: authHeaders({
                     'Content-Type': 'application/json',
-                },
+                }),
                 body: JSON.stringify(updatedPayload)
             });
 
@@ -226,7 +228,7 @@ export default function NewsPage() {
         setLoading(true);
 
         try {
-            const response = await fetch(`http://localhost:8000/api/news?limit=${LIMIT}&offset=${currentOffset}`);
+            const response = await fetch(apiUrl(`/api/news?limit=${LIMIT}&offset=${currentOffset}`));
             if (response.ok) {
                 const data = await response.json();
                 

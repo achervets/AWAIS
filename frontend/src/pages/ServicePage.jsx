@@ -14,7 +14,7 @@ const serviceTitles = {
   "dv-lottery": "DV Lottery Registration for Individuals (In the U.S. and Abroad)",
   "green-card-dv": "Green Card through Winning the DV Lottery (For Applicants in the U.S. and Abroad)",
   "reparole-ukraine": "Re-Parole for Ukraine",
-  "k-fiance-visa": "K-1, K-2, K-3, K-4 Visas for Fiancés of U.S. Citizens",
+  "k-fiance-visa": "K-1/K-3 Fiancé Visas",
   "sb1-visa": "SB-1 Returning Student Visa",
   "congress-inquiry": "Congressional Inquiry Assistance",
 };

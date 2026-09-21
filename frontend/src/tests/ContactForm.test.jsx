@@ -1,10 +1,10 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import ContactForm from '@/pages/ContactForm';
 
 // Mock fetch to prevent actual API calls
-global.fetch = vi.fn();
+globalThis.fetch = vi.fn();
 
 describe('ContactForm Component', () => {
   beforeEach(() => {
@@ -42,6 +42,7 @@ describe('ContactForm Component', () => {
     // Clear the path for Name and Email
     fireEvent.change(screen.getByPlaceholderText(/Full Name/i), { target: { value: 'John Doe' } });
     fireEvent.change(screen.getByPlaceholderText(/Your Email Address/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/Your Phone Number/i), { target: { value: '+17077619120' } });
     
     // Provide short message
     fireEvent.change(screen.getByPlaceholderText(/Your Message Here/i), { target: { value: 'Short' } });
@@ -55,6 +56,7 @@ describe('ContactForm Component', () => {
     // Clear the path
     fireEvent.change(screen.getByPlaceholderText(/Full Name/i), { target: { value: 'John Doe' } });
     fireEvent.change(screen.getByPlaceholderText(/Your Email Address/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/Your Phone Number/i), { target: { value: '+17077619120' } });
     
     // Use a word that triggers leo-profanity
     fireEvent.change(screen.getByPlaceholderText(/Your Message Here/i), { target: { value: 'This message contains a fuck' } });
@@ -73,7 +75,8 @@ describe('ContactForm Component', () => {
     // Fill every field correctly
     fireEvent.change(screen.getByPlaceholderText(/Full Name/i), { target: { value: 'John Doe' } });
     fireEvent.change(screen.getByPlaceholderText(/Your Email Address/i), { target: { value: 'valid@example.com' } });
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'B-1/B-2 Tourist Visa' } });
+    fireEvent.change(screen.getByPlaceholderText(/Your Phone Number/i), { target: { value: '+17077619120' } });
+    fireEvent.change(screen.getByRole('combobox', { name: /service/i }), { target: { value: 'B-1/B-2 Tourist Visa' } });
     fireEvent.change(screen.getByPlaceholderText(/Your Message Here/i), { target: { value: 'I would like to extend my B-1 visa for six months.' } });
 
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
@@ -97,6 +100,7 @@ describe('ContactForm Component', () => {
     // Fill and submit
     fireEvent.change(screen.getByPlaceholderText(/Full Name/i), { target: { value: 'John Doe' } });
     fireEvent.change(screen.getByPlaceholderText(/Your Email Address/i), { target: { value: 'valid@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/Your Phone Number/i), { target: { value: '+17077619120' } });
     fireEvent.change(screen.getByPlaceholderText(/Your Message Here/i), { target: { value: 'Valid message content' } });
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 

@@ -2,12 +2,13 @@ import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
 export default function PageTransition({ children, title }) {
+  const MotionDiv = motion.div;
   useEffect(() => {
-    document.title = title || "Nastya's Visa Emporium";
+    document.title = title || "America with Anastasiia";
   }, [title]);
   
   return (
-    <motion.div
+    <MotionDiv
       initial={{ opacity: 0, y: 15 }} 
       
       animate={{ opacity: 1, y: 0 }} 
@@ -19,6 +20,6 @@ export default function PageTransition({ children, title }) {
       style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0}}
     >
       {children}
-    </motion.div>
+    </MotionDiv>
   );
 }

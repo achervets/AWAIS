@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import ServicePage from '@/pages/ServicePage';
@@ -9,7 +9,7 @@ describe('ServicePage Component', () => {
 
         const fakeFileContent = "This is a fake B1/B2 description for testing purposes.";
 
-        const fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue({
+        const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
             ok: true,
             headers: {
                 get: () => 'text/plain'

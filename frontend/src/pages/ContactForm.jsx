@@ -110,6 +110,7 @@ export default function ContactForm() {
             <input 
                 type="text"
                 name="name"
+                aria-label="Full name"
                 placeholder="Your Full Name"
                 required
                 className="form-input"
@@ -117,6 +118,7 @@ export default function ContactForm() {
             <input
                 type="email"
                 name="email"
+                aria-label="Email address"
                 placeholder="Your Email Address"
                 required
                 className="form-input"
@@ -128,6 +130,7 @@ export default function ContactForm() {
                 <button
                   type="button"
                   className={`lang-btn ${preferredLanguage === "English" ? "active" : ""}`}
+                  aria-pressed={preferredLanguage === "English"}
                   onClick={() => setPreferredLanguage("English")}
                 >
                   English
@@ -135,6 +138,7 @@ export default function ContactForm() {
                 <button
                   type="button"
                   className={`lang-btn ${preferredLanguage === "Russian" ? "active" : ""}`}
+                  aria-pressed={preferredLanguage === "Russian"}
                   onClick={() => setPreferredLanguage("Russian")}
                 >
                   Russian
@@ -148,6 +152,7 @@ export default function ContactForm() {
                 <button
                   type="button"
                   className={`lang-btn ${preferredPlatform === "Telegram" ? "active" : ""}`}
+                  aria-pressed={preferredPlatform === "Telegram"}
                   onClick={() => setPreferredPlatform("Telegram")}
                 >
                   Telegram
@@ -155,6 +160,7 @@ export default function ContactForm() {
                 <button
                   type="button"
                   className={`lang-btn ${preferredPlatform === "WhatsApp" ? "active" : ""}`}
+                  aria-pressed={preferredPlatform === "WhatsApp"}
                   onClick={() => setPreferredPlatform("WhatsApp")}
                 >
                   WhatsApp
@@ -170,12 +176,14 @@ export default function ContactForm() {
                 value={phone}
                 onChange={setPhone}
                 placeholder="Your Phone Number"
+                aria-label="Phone number"
                 required
                 className="form-input"
             />
 
             <select 
                 name="service" 
+                aria-label="Service"
                 required 
                 defaultValue=""
                 className="form-select"
@@ -191,13 +199,14 @@ export default function ContactForm() {
               <option value="DV Lottery Registration for Individuals (In the U.S. and Abroad)">DV Lottery Registration for Individuals (In the U.S. and Abroad)</option>
               <option value="Green Card through Winning the DV Lottery (For Applicants in the U.S. and Abroad)">Green Card through Winning the DV Lottery (For Applicants in the U.S. and Abroad)</option>
               <option value="Re-Parole for Ukraine">Re-Parole for Ukraine</option>
-              <option value="K-1, K-2, K-3, K-4 Visas for Fiancés of U.S. Citizens">K-1, K-2, K-3, K-4 Visas for Fiancés of U.S. Citizens</option>
-              <option value="SB-1 Returning Student Visa">SB-1 Returning Student Visa</option>
+              <option value="K-1/K-3 Fiancé Visas">K-1/K-3 Fiancé Visas</option>
+              <option value="SB-1 Returning Resident Visa">SB-1 Returning Resident Visa</option>
               <option value="Congressional Inquiry Assistance">Congressional Inquiry Assistance</option>
               <option value="Other/Not Sure">Other / Not Sure</option>
             </select>
             <textarea
                 name="message"
+                aria-label="Message"
                 placeholder="Your Message Here"
                 required
                 rows="5"
@@ -212,10 +221,13 @@ export default function ContactForm() {
                 className="form-submit-btn"
             >Submit
             </button>
+            <p className="form-privacy-note">
+              By submitting this form, you acknowledge our <Link to="/privacy">Privacy Policy</Link>.
+            </p>
           </form>
 
           {result && (
-            <p className={`form-status ${isError ? "status-error" : "status-success"}`}>
+            <p role="status" aria-live="polite" className={`form-status ${isError ? "status-error" : "status-success"}`}>
               {result}
             </p>
           )}

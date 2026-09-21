@@ -1,26 +1,47 @@
 services:
+  frontend:
+    build: ../frontend
+    restart: unless-stopped
+    ports:
+      - "${PUBLIC_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
   backend:
     build: .
-    container_name: awais_backend
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
+    restart: unless-stopped
     environment:
-      - DATABASE_URL=postgresql://postgres:mysecretpassword@db:5432/awais_db
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}@db:5432/awais_db
       - PYTHONUNBUFFERED=1
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - TOKEN_SECRET=${TOKEN_SECRET:?Set TOKEN_SECRET}
+      - ADMIN_REGISTRATION_KEY=${ADMIN_REGISTRATION_KEY:?Set ADMIN_REGISTRATION_KEY}
+      - CORS_ORIGINS=${CORS_ORIGINS:?Set CORS_ORIGINS}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   db:
     image: postgres:15-alpine
-    container_name: awais_postgres
     restart: always
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
       - POSTGRES_DB=awais_db
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d awais_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
